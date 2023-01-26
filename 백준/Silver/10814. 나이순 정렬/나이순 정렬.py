@@ -1,16 +1,15 @@
 import sys
-input = sys.stdin.readline
 
-N = int(input())
-member_lst = list()
+n = int(input())
+people = []
 
-for i in range(N):
-    member_lst.append(list(input().split()))
+for i in range(n):
+    people.append(list(sys.stdin.readline().split()))
 
-for i in member_lst:
+for i in people:
     i[0] = int(i[0])
 
-member_lst.sort(key=lambda x : x[0])
+people.sort(key=lambda x: x[0])
 
-for i in member_lst:
-    print(i[0], i[1])
+for i in range(n):
+    print(f'{people[i][0]} {people[i][1]}')
