@@ -2,15 +2,15 @@ import sys
 input = sys.stdin.readline
 
 N = int(input())
-rope = [0] * N
+rope = []
 
 for i in range(N):
-    rope[i] = (int(input()))
-
+    rope.append(int(input()))
+    
 rope.sort()
-max_ = 0
+real_max = []
 
 for i in range(N):
-    max_ = max(max_ , rope[i] * (N-i))
+    real_max.append(rope[i] * (N-i))
 
-print(max_)
+print(max(real_max))
