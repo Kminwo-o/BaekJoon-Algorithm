@@ -17,6 +17,8 @@ def find(x, depth):
                 idx -= 1
 
         elif operator[idx] == '>':
+            if i > x:
+                break
             if i not in used and i < x:
                 used.append(i)
                 idx += 1
@@ -36,7 +38,7 @@ for i in range(10):
     used.append(i)
     find(i, 0)
     idx = 0
-    
+
 max_ = max(*possible)
 min_ = min(*possible)
 
