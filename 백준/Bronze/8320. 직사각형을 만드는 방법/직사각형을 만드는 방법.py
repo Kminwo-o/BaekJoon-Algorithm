@@ -1,10 +1,16 @@
-N = int(input())
+import sys
+input = sys.stdin.readline
 
-cnt = 0
-
-for i in range(1, N+1):
-    for j in range(i, N+1):
-        if i*j <= N:
-            cnt += 1
-
-print(cnt)
+T  = int(input())
+nemo = 0
+for i in range(1, T+1):
+    check = []
+    for j in range(2, i//2+1):
+        if i % j == 0:
+            if j in check:
+                break
+            else:
+                nemo += 1
+                check.append(i//j)
+    nemo += 1
+print(nemo)
