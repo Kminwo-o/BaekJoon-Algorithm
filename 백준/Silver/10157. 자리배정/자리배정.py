@@ -1,3 +1,6 @@
+import sys
+input = sys.stdin.readline
+
 X, Y = map(int, input().split())
 
 d = [(1,0), (0,1), (-1,0), (0,-1)] # 하 우 상 좌
@@ -23,13 +26,15 @@ while num != (X*Y)+1:
 audience = int(input())
 
 check = False
-for i in range(Y):
-    for j in range(X):
-        if arr[i][j] == audience:
-            print(j+1, i+1)
-            check = True
-            break
-    if check == True:
-        break
-else:
+
+if audience > X*Y:
     print(0)
+else:
+    for i in range(Y):
+        for j in range(X):
+            if arr[i][j] == audience:
+                print(j+1, i+1)
+                check = True
+                break
+        if check == True:
+            break
