@@ -21,9 +21,6 @@ while idx != arr:
             elif stack[-1][0] > a:
                 real.append(stack[-1][1] + 1)
                 break
-            else:
-                real.append(stack[-1][1] + 1)
-                stack.pop()
 
         stack.append((a, idx))
     else:
