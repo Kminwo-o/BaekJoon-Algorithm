@@ -10,17 +10,11 @@ public class Main {
 		document = br.readLine();
 		search = br.readLine();
 		
-		int idx = 0;
-		int ans = 0;
+		int doc_len = document.length();
+		int search_len = search.length();
 		
-		while (document.length() - search.length() >= idx) {
-			if (document.substring(idx, idx + search.length()).equals(search)) {
-				ans++;
-				idx += search.length();
-			} else {
-				idx++;
-			}
-		}
+		document = document.replace(search, "");
+		int ans = (doc_len - document.length()) / search_len;
 		System.out.println(ans);
 	}
 }
