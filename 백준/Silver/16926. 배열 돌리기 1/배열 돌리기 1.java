@@ -62,12 +62,14 @@ class Main{
             int[][] tmpArr = new int[N][M];
             arr = rotation(len, tmpArr);
         }
-
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = 0; j < arr[i].length; j++) {
-                System.out.print(arr[i][j] + " ");
+        
+        StringBuilder sb = new StringBuilder();
+        for(int i=0;i<N;i++) {
+            for(int j=0;j<M;j++) {
+                sb.append(arr[i][j]).append(" ");
             }
-            System.out.println();
+            sb.append("\n");
         }
+        System.out.println(sb);
     }
 }
