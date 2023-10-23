@@ -1,31 +1,32 @@
 import sys
-
 input = sys.stdin.readline
+
+def binary_search(x, arr, length):
+    left = 0
+    right = length
+
+    while (left < right):
+        mid = (left + right) // 2
+        if (arr[mid] < x):
+            left = mid + 1
+        else:
+            right = mid
+
+    return left
 
 N = int(input())
 lst = list(map(int, input().split()))
-lsst = [lst[0]]
+answer = [0] * (N+1)
 
-for i in lst:
-    if lsst[-1] < i:
-        lsst.append(i)
+idx = 0
 
+for i in range(N):
+    num = lst[i]
+    if (answer[idx] < num):
+        idx += 1
+        answer[idx] = num
     else:
-        left = 0
-        right = len(lsst)
+        lowbound = binary_search(num, answer, idx)
+        answer[lowbound] = num
 
-        while left < right:
-            mid = (right + left) // 2
-
-            if lsst[mid] == i:
-                right = mid
-                break
-
-            elif lsst[mid] < i:
-                left = mid + 1
-            else:
-                right = mid
-
-        lsst[right] = i
-
-print(len(lsst))
+print(idx)
