@@ -6,42 +6,26 @@ public class Main {
     static int[][] dir = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
     static int ans = 0;
 
-    public static class gaHwi {
-        int x;
-        int y;
-        int cnt;
-        int sweetPotato;
-
-        public gaHwi(int x, int y, int cnt, int sweetPotato) {
-            this.x = x;
-            this.y = y;
-            this.cnt = cnt;
-            this.sweetPotato = sweetPotato;
-        }
-    }
-
-    public static void dfs(gaHwi gaHwi, char[][] arr) {
-        if (gaHwi.cnt == T) {
-            ans = Math.max(ans, gaHwi.sweetPotato);
+    public static void dfs(int x, int y, int cnt, int sweetPotato, char[][] arr) {
+        if (cnt == T) {
+            ans = Math.max(ans, sweetPotato);
             return;
         }
 
         for (int i = 0; i < 4; i++) {
-            int nx = gaHwi.x + dir[i][0];
-            int ny = gaHwi.y + dir[i][1];
+            int nx = x + dir[i][0];
+            int ny = y + dir[i][1];
 
             if (nx >= 0 && nx < R && ny >= 0 && ny < C && arr[nx][ny] != '#') {
                 if (arr[nx][ny] == 'S') {
                     arr[nx][ny] = '.';
-                    dfs(new gaHwi(nx, ny, gaHwi.cnt + 1, gaHwi.sweetPotato + 1), arr);
+                    dfs(nx, ny, cnt + 1, sweetPotato + 1, arr);
                     arr[nx][ny] = 'S';
                 } else {
-                    dfs(new gaHwi(nx, ny, gaHwi.cnt + 1, gaHwi.sweetPotato), arr);
+                    dfs(nx, ny, cnt + 1, sweetPotato, arr);
                 }
             }
         }
-
-
     }
 
     public static void main(String[] args) throws IOException {
@@ -50,7 +34,8 @@ public class Main {
         R = Integer.parseInt(st.nextToken());
         C = Integer.parseInt(st.nextToken());
         T = Integer.parseInt(st.nextToken());
-        gaHwi gaHwi = null;
+        int x = 0;
+        int y = 0;
 
         char[][] arr = new char[R][C];
 
@@ -60,12 +45,13 @@ public class Main {
                 arr[i][j] = line[j];
 
                 if (arr[i][j] == 'G') {
-                    gaHwi = new gaHwi(i, j, 0, 0);
+                    x = i;
+                    y = j;
                 }
             }
         }
 
-        dfs(gaHwi, arr);
+        dfs(x, y, 0, 0, arr);
 
         System.out.println(ans);
     }
