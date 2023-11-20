@@ -1,47 +1,55 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int n = scanner.nextInt();
-        ArrayList<String> place = new ArrayList<>();
-        HashMap<String, int[]> time = new HashMap<>();
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(br.readLine());
+        ArrayList<String> places = new ArrayList<>();
+        HashMap<String, int[]> times = new HashMap<>();
         ArrayList<String[]> maxplace = new ArrayList<>();
-        ArrayList<String> name = new ArrayList<>();
+        ArrayList<String> names = new ArrayList<>();
 
         for (int i = 0; i < n; i++) {
-            String[] l = new String[4];
-            for (int j = 0; j < 4; j++)
-                l[j] = scanner.next();
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            String name = st.nextToken();
 
-            if (!name.contains(l[0])) {
-                name.add(l[0]);
-                if (!time.containsKey(l[1]))
-                    time.put(l[1], new int[50001]);
-
-                for (int x = Integer.parseInt(l[2]); x < Integer.parseInt(l[3]); x++)
-                    time.get(l[1])[x]++;
-
-                if (maxplace.isEmpty()) {
-                    maxplace.add(new String[]{l[1], "1"});
-                } else {
-                    String placename = maxplace.get(maxplace.size() - 1)[0];
-                    int cnt = Integer.parseInt(maxplace.get(maxplace.size() - 1)[1]);
-                    maxplace.remove(maxplace.size() - 1);
-
-                    int maxTime = Arrays.stream(time.get(l[1])).max().getAsInt();
-                    if (cnt < maxTime) {
-                        cnt = maxTime;
-                        placename = l[1];
-                        maxplace.clear();
-                    } else if (cnt == maxTime) {
-                        maxplace.add(new String[]{l[1], Integer.toString(maxTime)});
-                    }
-                    maxplace.add(new String[]{placename, Integer.toString(cnt)});
-                }
-                if (!place.contains(l[1]))
-                    place.add(l[1]);
+            if (names.contains(name)) {
+                continue;
             }
+
+            names.add(name);
+            String place = st.nextToken();
+            int start = Integer.parseInt(st.nextToken());
+            int end = Integer.parseInt(st.nextToken());
+
+            if (!times.containsKey(place))
+                times.put(place, new int[50001]);
+
+            for (int j = start; j < end; j++)
+                times.get(place)[j]++;
+
+            if (maxplace.isEmpty()) {
+                maxplace.add(new String[]{place, "1"});
+            } else {
+                String placename = maxplace.get(maxplace.size() - 1)[0];
+                int cnt = Integer.parseInt(maxplace.get(maxplace.size() - 1)[1]);
+                maxplace.remove(maxplace.size() - 1);
+
+                int maxTime = Arrays.stream(times.get(place)).max().getAsInt();
+                if (cnt < maxTime) {
+                    cnt = maxTime;
+                    placename = place;
+                    maxplace.clear();
+                } else if (cnt == maxTime) {
+                    maxplace.add(new String[]{place, Integer.toString(maxTime)});
+                }
+                maxplace.add(new String[]{placename, Integer.toString(cnt)});
+            }
+            if (!places.contains(place))
+                places.add(place);
         }
 
         String p;
@@ -55,21 +63,22 @@ public class Main {
             maxx = Integer.parseInt(maxplace.get(0)[1]);
         }
 
-        System.out.print(p + " ");
+        StringBuilder sb = new StringBuilder();
         int start = 0;
         for (int x = 0; x < 50001; x++) {
-            if (time.get(p)[x] == maxx) {
+            if (times.get(p)[x] == maxx) {
                 start = x;
                 break;
             }
         }
         int end = 0;
         for (int x = start; x < 50001; x++) {
-            if (time.get(p)[x] != maxx) {
+            if (times.get(p)[x] != maxx) {
                 end = x;
                 break;
             }
         }
-        System.out.println(start + " " + end);
+        sb.append(p).append(" ").append(start).append(" ").append(end);
+        System.out.println(sb);
     }
 }
