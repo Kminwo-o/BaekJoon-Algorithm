@@ -1,32 +1,35 @@
 import sys
-from heapq import heappush, heappop
 input = sys.stdin.readline
 
-def prim():
-    answer = []
-    queue = []
-    queue.append((0, 1))
+def find(n):
+    if parent[n] != n:
+        parent[n] = find(parent[n])
+    return parent[n]
 
-    while queue:
-        cur_cost, cur_now = heappop(queue)
-
-        if visited[cur_now] == False:
-            visited[cur_now] = True
-            answer.append(cur_cost)
-            if len(answer) == n:
-                break
-            for next_now, next_cost in graph[cur_now]:
-                heappush(queue, (next_cost, next_now))
-    
-    return sum(answer) - max(answer)
+def union(a, b):
+    a = find(a)
+    b = find(b)
+    if a < b:
+        parent[b] = a
+    else:
+        parent[a] = b
 
 n, m = map(int, input().split())
-graph = [[] for _ in range(n+1)]
-visited = [False for _ in range(n+1)]
+graph = []
+parent = [i for i in range(n+1)]
 
-for i in range(m):
+for _ in range(m):
     a, b, c = map(int, input().split())
-    graph[a].append((b, c))
-    graph[b].append((a, c))
+    graph.append((a, b, c))
 
-print(prim())
+graph.sort(key=lambda x : x[2])
+
+answer = 0
+last_cost = 0
+for a, b, c in graph:
+    if find(a) != find(b):
+        union(a, b)
+        answer += c
+        last_cost = c
+
+print(answer - last_cost)
