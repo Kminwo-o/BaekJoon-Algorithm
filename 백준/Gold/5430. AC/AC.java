@@ -8,9 +8,7 @@ public class Main {
     static String p;
     static StringBuilder sb = new StringBuilder();
     public static void AC(String command, ArrayDeque<Integer> deque) {
-        // boolean으로 앞뒤 판별, 직접 배열을 돌려주면 시간초과 날 확률 높음. 100,000이라.
         boolean isRight = true;
-        // toCharArray로 String을 char배열로 바꿔주기.
         for (char cmd: command.toCharArray()) {
             if (cmd == 'R') {
                 isRight = !isRight;
@@ -32,7 +30,6 @@ public class Main {
     }
     public static void strPrint(ArrayDeque<Integer> deque, boolean isRight) {
         sb.append('[');
-        // deque는 size 가능
         if (deque.size() > 0) {
             if (isRight) {
                 sb.append(deque.pollFirst());
@@ -57,7 +54,6 @@ public class Main {
         for (int i = 0; i < T; i++) {
             p = br.readLine();
             N = Integer.parseInt(br.readLine());
-            // StringTokenizer는 여러개의 문자를 넘겨주면 저것들을 기준으로 분리.
             st = new StringTokenizer(br.readLine(), "[,]");
             deque = new ArrayDeque<>();
 
