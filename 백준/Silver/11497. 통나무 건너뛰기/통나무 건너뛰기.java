@@ -9,6 +9,7 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         t = Integer.parseInt(br.readLine());
 
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < t; i++) {
             n = Integer.parseInt(br.readLine());
 
@@ -38,7 +39,8 @@ public class Main {
                 ans = Math.max(ans, Math.abs(tree[j-1] - tree[j]));
             }
 
-            System.out.println(ans);
+            sb.append(ans).append("\n");
         }
+        System.out.println(sb);
     }
 }
