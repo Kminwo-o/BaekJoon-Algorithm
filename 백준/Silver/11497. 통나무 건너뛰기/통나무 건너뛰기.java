@@ -1,46 +1,51 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.Arrays;
+import java.util.StringTokenizer;
 
 public class Main {
     static int t, n;
+    static int[] arr;
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+        StringBuilder sb = new StringBuilder();
         t = Integer.parseInt(br.readLine());
 
-        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < t; i++) {
             n = Integer.parseInt(br.readLine());
 
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            int[] arr = new int[n];
+            arr = new int[n];
+            st = new StringTokenizer(br.readLine());
             for (int j = 0; j < n; j++) {
                 arr[j] = Integer.parseInt(st.nextToken());
             }
-            
+
             Arrays.sort(arr);
 
-            int[] tree = new int[n];
-            int leftIdx = 0;
-            int rightIdx = n - 1;
+            int left = 0;
+            int right = n-1;
+            int[] newArr = new int[n];
+
             for (int j = 0; j < n; j++) {
                 if (j % 2 == 0) {
-                    tree[leftIdx] = arr[j];
-                    leftIdx++;
+                    newArr[left] = arr[j];
+                    left++;
                 } else {
-                    tree[rightIdx] = arr[j];
-                    rightIdx--;
+                    newArr[right] = arr[j];
+                    right--;
                 }
             }
 
-            int ans = Math.abs(tree[0] - tree[n-1]);
+            int answer = newArr[n-1] - newArr[0];
             for (int j = 1; j < n; j++) {
-                ans = Math.max(ans, Math.abs(tree[j-1] - tree[j]));
+                answer = Math.max(answer, Math.abs(newArr[j - 1] - newArr[j]));
             }
 
-            sb.append(ans).append("\n");
+            sb.append(answer).append("\n");
         }
+
         System.out.println(sb);
     }
 }
